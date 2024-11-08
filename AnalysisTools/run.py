@@ -28,8 +28,8 @@ def main():
     # Initialize variables
     root_file = ""
     python_script = "segments_efficiency.py"  # Default script
-    job_name = ""
-    config = ""
+    job_name = "Test"
+    config = "0"
 
     # Parse command line options
     args = sys.argv[1:]

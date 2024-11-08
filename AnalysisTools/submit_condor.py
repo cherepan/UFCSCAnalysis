@@ -49,8 +49,8 @@ def main():
 #        {"root_file": "../ZMM_RU_10_05.root", "python_script": "missing_layers.py", "job_name": "RUClean_MissingLayers", "config": "1"},
 
         
-        {"root_file": "CSC_UF_Ntuple_SegmentAlgoUF.root", "python_script": "segments_efficiency.py", "job_name": "UFSegmentsEfficiency_WithResolutionCut", "config": "0"},
-        {"root_file": "CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "segments_efficiency.py", "job_name": "DFSegmentsEfficiency_WithResolutionCut", "config": "1"},
+        {"root_file": "CSC_UF_Ntuple_SegmentAlgoUF.root",      "python_script": "segments_efficiency.py", "job_name": "UFSegmentsEfficiency", "config": "0"},
+        {"root_file": "CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "segments_efficiency.py", "job_name": "DFSegmentsEfficiency", "config": "1"},
         
         # Add more job parameters as needed
     ]
