@@ -7,17 +7,15 @@ cscRootMaker = cms.EDAnalyzer('UFCSCRootMaker',
   standAloneMuonsSrc = cms.untracked.InputTag('standAloneMuons'),
   generalTracksSrc   = cms.untracked.InputTag('generalTracks','','RECO'),
 
-#  cscRecHitTagSrc = cms.untracked.InputTag('csc2DRecHits'), # it was default
-#  cscSegTagSrc = cms.untracked.InputTag('cscSegments','','RECO'),    #  RU recocscSegTagSrc
-
-
-
-
-                              
-
 #  cscRecHitTagSrc = cms.untracked.InputTag('csc2DRecHits','','localRecoUF'), # UF RECO
 #  cscRecHitTagSrc = cms.untracked.InputTag('csc2DRecHits','','RECO'), # RU reco # always use the rechots if STD aldo
 
+
+
+
+#########  has been set in run_ntuple.py                              
+#  cscRecHitTagSrc = cms.untracked.InputTag('csc2DRecHits'), # it was default
+#  cscSegTagSrc = cms.untracked.InputTag('cscSegments','','RECO'),    #  RU recocscSegTagSrc
 
 #  cscSegTagSrc = cms.untracked.InputTag('cscSegments','','localRecoUF'),   #  UF reco
 #  cscSegTagSrc = cms.untracked.InputTag('cscSegments','','RECO'),    #  RU reco
