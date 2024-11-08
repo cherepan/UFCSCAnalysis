@@ -26,7 +26,7 @@ process.GlobalTag.globaltag = "133X_mcRun3_2024_realistic_v7"
 
 #process.GlobalTag.globaltag = "106X_upgrade2018_realistic_v15_L1v1"
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(200) )
 #process.maxEvents = cms.untracked.PSet(  500 )
 isSIMDIGI = bool(False)
 isRAW = bool(True)
