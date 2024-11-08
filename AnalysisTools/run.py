@@ -27,7 +27,7 @@ def execute_python_script(python_script, root_file, job_name, config):
 def main():
     # Initialize variables
     root_file = ""
-    python_script = "eff_csc.py"  # Default script
+    python_script = "segments_efficiency.py"  # Default script
     job_name = ""
     config = ""
 
@@ -55,10 +55,10 @@ def main():
         show_help()
 
     print('Starting Job')
-    subprocess.call(["ls", "-lt", "/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCSoftware/UFCSCRootMaker/condor"])
-    os.environ["workdir"] = "/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCSoftware/UFCSCRootMaker/condor"
+    subprocess.call(["ls", "-lt", os.getcwd()])
+    os.environ["workdir"] = os.getcwd()
     os.environ["X509_USER_PROXY"] = "/afs/cern.ch/work/c/cherepan/T3M/Tools/ControlScripts/proxy/x509up_u54841"
-    os.chdir("/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCSoftware/UFCSCRootMaker/condor")
+    os.chdir(os.getcwd())
 
     # Execute the Python script with the provided options
     execute_python_script(python_script, root_file, job_name, config)
