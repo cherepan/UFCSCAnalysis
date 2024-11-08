@@ -26,7 +26,7 @@ process.GlobalTag.globaltag = "133X_mcRun3_2024_realistic_v7"
 
 #process.GlobalTag.globaltag = "106X_upgrade2018_realistic_v15_L1v1"
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(200) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
 #process.maxEvents = cms.untracked.PSet(  500 )
 isSIMDIGI = bool(False)
 isRAW = bool(True)
@@ -50,11 +50,13 @@ print(" --> running on %i events" % len(event_list), ' CleanChambers = ', CleanC
 
 
 
+
+
 process.options   = cms.untracked.PSet( SkipEvent = cms.untracked.vstring("ProductNotFound") )
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 process.source    = cms.Source("PoolSource",
                                noEventSort         = cms.untracked.bool(True),
-#                               eventsToProcess     = cms.untracked.VEventRange(event_list),
+                               eventsToProcess     = cms.untracked.VEventRange(event_list),
                                duplicateCheckMode  = cms.untracked.string('noDuplicateCheck'),
                                fileNames = cms.untracked.vstring(
 #                                    'file:/eos/user/c/cherepan/CSC/InputFilesZMMRelVal_13_3_0/a95425f8-0854-4252-bc17-42ccb35ab3fd.root'
