@@ -36,21 +36,10 @@ def main():
     # Example job parameters
     job_params = [
 
+        ##  config 0 - clean; 1 - noise was used in the past
+        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoUF.root",      "python_script": "segments_efficiency.py", "job_name": "UFSegmentsEfficiency", "config": "0"},
+        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "segments_efficiency.py", "job_name": "DFSegmentsEfficiency", "config": "0"},
         
-#        {"root_file": "../ZMM_UF_10_05.root", "python_script": "eff_csc.py", "job_name": "UFAllSimHits", "config": "0"},
-#        {"root_file": "../ZMM_UF_10_05.root", "python_script": "eff_csc.py", "job_name": "UFClean", "config": "1"},
-#        {"root_file": "../ZMM_RU_10_05.root", "python_script": "eff_csc.py", "job_name": "RUAllSimHits", "config": "0"},
-#        {"root_file": "../ZMM_RU_10_05.root", "python_script": "eff_csc.py", "job_name": "RUClean", "config": "1"},#
-
-
-#        {"root_file": "../ZMM_UF_10_05.root", "python_script": "missing_layers.py", "job_name": "UFAllSimHits_MissingLayers", "config": "0"},
-#        {"root_file": "../ZMM_UF_10_05.root", "python_script": "missing_layers.py", "job_name": "UFClean_MissingLayers", "config": "1"},
-#        {"root_file": "../ZMM_RU_10_05.root", "python_script": "missing_layers.py", "job_name": "RUAllSimHits_MissingLayers", "config": "0"},
-#        {"root_file": "../ZMM_RU_10_05.root", "python_script": "missing_layers.py", "job_name": "RUClean_MissingLayers", "config": "1"},
-
-        
-        {"root_file": "CSC_UF_Ntuple_SegmentAlgoUF.root",      "python_script": "segments_efficiency.py", "job_name": "UFSegmentsEfficiency", "config": "0"},
-        {"root_file": "CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "segments_efficiency.py", "job_name": "DFSegmentsEfficiency", "config": "1"},
         
         # Add more job parameters as needed
     ]

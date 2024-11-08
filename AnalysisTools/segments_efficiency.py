@@ -179,9 +179,9 @@ class Analysis():
                                 if(len(allMuonSimHitsInChamber) < 3 ):continue   # Skip if 2 mu simHits in here, who cares
                                 if(len(allRecHitsInChamber)     < 3 ):continue   # Skip if less than 3 rechits
 
-                                print('-------------  Hits Selection',HitsSelectionPrefix)
+#                                print('-------------  Hits Selection',HitsSelectionPrefix)
                                 if(HitsSelectionPrefix=='Clean_'):
-                                    print(' all SimHits in clean chamber ', len(allSimHitsInChamber))
+#                                    print(' all SimHits in clean chamber ', len(allSimHitsInChamber))
                                     Events_with_Clean_CSC_with_muon.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
                                                                                                             tree.Event,    
                                                                                                             int(tools.Chamber_endcap(chambers_with_gen_muon)),
@@ -190,7 +190,7 @@ class Analysis():
                                                                                                             int(tools.Chamber_chamber(chambers_with_gen_muon))))
 
                                 if(HitsSelectionPrefix=='Noise_' and len(allSimHitsInChamber) > 20):
-                                    print(' N sim hits ', len(allSimHitsInChamber))
+#                                    print(' N sim hits ', len(allSimHitsInChamber))
                                     Events_with_Noisy_CSC_with_muon.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
                                                                                                             tree.Event,
                                                                                                             int(tools.Chamber_endcap(chambers_with_gen_muon)),
@@ -294,7 +294,7 @@ class Analysis():
                      #                   tools.write_th2f(WireHist)
                      #                   tools.write_th2f(StripHist)
 
-                                        print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+#                                        print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
                                         EventsAndChambersWithTwoSegments.write('{}  {}  {}  {}   {}   \n '.format(tree.Event,
                                                                                                                      int(tools.Chamber_endcap(chambers_with_gen_muon)),
                                                                                                                      int(tools.Chamber_station(chambers_with_gen_muon)),

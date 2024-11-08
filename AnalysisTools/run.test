@@ -1,5 +1,5 @@
-python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoDefault.root   -j Test_26_08_DF 2>&1 | tee Log_DF
-python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoUF.root        -j Test_26_08_UF 2>&1 | tee Log_UF
+python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoDefault.root   -j Test_DefaultReco 2>&1 | tee Log_DF
+python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoUF.root        -j Test_UFReco      2>&1 | tee Log_UF
 
 
 
