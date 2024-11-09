@@ -90,8 +90,9 @@ class Analysis():
         EventsAndChambersWithFourSegments = open("EventsAndChambersWithFourSegments.txt","w")
 
 
-        Events_with_Clean_CSC_with_muon = open("Events_with_Clean_CSC_with_muon.txt","w")
-        Events_with_Noisy_CSC_with_muon = open("Events_with_Noisy_CSC_with_muon.txt","w")
+        Events_with_Clean_CSC_with_muon   = open("Events_with_Clean_CSC_with_muon.txt","w")
+        Events_with_Noisy_CSC_with_muon   = open("Events_with_Noisy_CSC_with_muon.txt","w")
+        Events_with_more_that_one_segment = open("Events_with_more_that_one_segment","w")
 #        Events_with_Fake_CSC_with_muon  = open("Events_with_Fake_CSC_with_muon.txt","w")
         #Analysis Loop
         for i in range( tree.GetEntries() ):
@@ -179,9 +180,17 @@ class Analysis():
                                 if(len(allMuonSimHitsInChamber) < 3 ):continue   # Skip if 2 mu simHits in here, who cares
                                 if(len(allRecHitsInChamber)     < 3 ):continue   # Skip if less than 3 rechits
 
-#                                print('-------------  Hits Selection',HitsSelectionPrefix)
+
+                                if(len(allSegmentsInChamber) > 2 ):
+                                    Events_with_more_that_one_segment.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
+                                                                                                              tree.Event,
+                                                                                                              int(tools.Chamber_endcap(chambers_with_gen_muon)),
+                                                                                                              int(tools.Chamber_station(chambers_with_gen_muon)),
+                                                                                                              int(tools.Chamber_ring(chambers_with_gen_muon)),
+                                                                                                              int(tools.Chamber_chamber(chambers_with_gen_muon))))
+
+
                                 if(HitsSelectionPrefix=='Clean_'):
-#                                    print(' all SimHits in clean chamber ', len(allSimHitsInChamber))
                                     Events_with_Clean_CSC_with_muon.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
                                                                                                             tree.Event,    
                                                                                                             int(tools.Chamber_endcap(chambers_with_gen_muon)),
@@ -189,8 +198,7 @@ class Analysis():
                                                                                                             int(tools.Chamber_ring(chambers_with_gen_muon)),
                                                                                                             int(tools.Chamber_chamber(chambers_with_gen_muon))))
 
-                                if(HitsSelectionPrefix=='Noise_' and len(allSimHitsInChamber) > 20):
-#                                    print(' N sim hits ', len(allSimHitsInChamber))
+                                if(HitsSelectionPrefix=='Noise_' and len(allSimHitsInChamber) > 10):
                                     Events_with_Noisy_CSC_with_muon.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
                                                                                                             tree.Event,
                                                                                                             int(tools.Chamber_endcap(chambers_with_gen_muon)),
@@ -279,35 +287,37 @@ class Analysis():
                                             if ( math.fabs(tree.simHits_particleType[simhit]) == 13 ):
                                                 self.sorted_hists2D[ChamberTypePrefix + 'MuSimHitsLostSegment'].Fill(x, y)
                                                 print('  Mu Sim Hits in the lost segment case    ', x,'  \   ', y)
-                                        if(len(allRecHitsInChamber) > 200):EventsAndChambersWithZeroRuSegments.write('{}  {}  {}  {}   {}   \n '.format(tree.Event,
-                                                                                                                     int(tools.Chamber_endcap(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_station(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_ring(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_chamber(chambers_with_gen_muon))))
+                                        if(len(allRecHitsInChamber) > 20):
+                                            EventsAndChambersWithZeroRuSegments.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
+                                                                                                                         tree.Event,
+                                                                                                                         int(tools.Chamber_endcap(chambers_with_gen_muon)),
+                                                                                                                         int(tools.Chamber_station(chambers_with_gen_muon)),
+                                                                                                                         int(tools.Chamber_ring(chambers_with_gen_muon)),
+                                                                                                                         int(tools.Chamber_chamber(chambers_with_gen_muon))))
+
+
 
 
                                     if( len(allSegmentsInChamber) ==2 ):
-                     #                   print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-                     #                   WireHist  = tools.fill_wire_matrix(tree,allRecHitsInChamber,chambers_with_gen_muon)
-                     #                   StripHist = tools.fill_strip_matrix(tree,allRecHitsInChamber,chambers_with_gen_muon)
-                     #                   print('Event:  ', int(tree.Event), '  chamber  ', chambers_with_gen_muon)
-                     #                   tools.write_th2f(WireHist)
-                     #                   tools.write_th2f(StripHist)
+                                        EventsAndChambersWithTwoSegments.write('{}:{} - {} {} {} {}   \n '.format(tree.Run,
+                                                                                                                  tree.Event,
+                                                                                                                  int(tools.Chamber_endcap(chambers_with_gen_muon)),
+                                                                                                                  int(tools.Chamber_station(chambers_with_gen_muon)),
+                                                                                                                  int(tools.Chamber_ring(chambers_with_gen_muon)),
+                                                                                                                  int(tools.Chamber_chamber(chambers_with_gen_muon))))
 
-#                                        print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
-                                        EventsAndChambersWithTwoSegments.write('{}  {}  {}  {}   {}   \n '.format(tree.Event,
-                                                                                                                     int(tools.Chamber_endcap(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_station(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_ring(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_chamber(chambers_with_gen_muon))))
 
                                     if( len(allSegmentsInChamber) ==4 ):
-                                        EventsAndChambersWithFourSegments.write('{}  {}  {}  {}   {}   \n '.format(tree.Event,
-                                                                                                                     int(tools.Chamber_endcap(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_station(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_ring(chambers_with_gen_muon)),
-                                                                                                                     int(tools.Chamber_chamber(chambers_with_gen_muon))))
+                                        EventsAndChambersWithFourSegments.write('{}:{} - {} {} {} {}    \n '.format(tree.Run,
+                                                                                                                   tree.Event,
+                                                                                                                   int(tools.Chamber_endcap(chambers_with_gen_muon)),
+                                                                                                                   int(tools.Chamber_station(chambers_with_gen_muon)),
+                                                                                                                   int(tools.Chamber_ring(chambers_with_gen_muon)),
+                                                                                                                   int(tools.Chamber_chamber(chambers_with_gen_muon))))
 
+
+
+                                        
                                     MatchedSegmentWithinResolution = tools.FoundMatchedSegment(tree, allMuonSimHitsInChamber, chambers_with_gen_muon)  # to be worked on
                                     
 #                                    print(' pass  ', tools.SegmentWithinResolution(tree, ClosestSegment,  MuonSimSegment_localX, MuonSimSegment_localY, ChamberTypePrefix[:-1] ), '  and is mathced  ', MatchedSegmentWithinResolution)

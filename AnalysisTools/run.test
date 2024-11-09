@@ -2,6 +2,8 @@ python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoDefault.root 
 python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoUF.root        -j Test_UFReco      2>&1 | tee Log_UF
 
 
+./run.py -f ../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoDefault.root -p segments_efficiency.py -j DFSegmentsEfficiency -c 0
+
 
 
 

@@ -55,11 +55,13 @@ def main():
         show_help()
 
     print('Starting Job')
-    subprocess.call(["ls", "-lt", os.getcwd()])
-    os.environ["workdir"] = os.getcwd()
+    subprocess.call(["ls", "-lt", "/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCAnalysis/AnalysisTools"])
+    os.environ["workdir"] = "/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCAnalysis/AnalysisTools"
     os.environ["X509_USER_PROXY"] = "/afs/cern.ch/work/c/cherepan/T3M/Tools/ControlScripts/proxy/x509up_u54841"
-    os.chdir(os.getcwd())
+    os.chdir("/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCAnalysis/AnalysisTools")
 
+    #os.chdir(os.getcwd())
+#/afs/cern.ch/work/c/cherepan/CSC/LocalReco/CMSSW_13_3_0/src/UFCSCAnalysis/AnalysisTools
     # Execute the Python script with the provided options
     execute_python_script(python_script, root_file, job_name, config)
 
