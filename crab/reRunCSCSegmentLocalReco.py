@@ -33,7 +33,7 @@ isRAW = bool(True)
 ###################################################
 
 
-CleanChambers = True;
+CleanChambers = False;
 
 
 
@@ -45,7 +45,6 @@ if(not CleanChambers):
 print("Getting events to process from:", txt_file)
 event_list = [event.split('-')[0].strip() for event in txt_file.readlines()]
 event_list= list(dict.fromkeys(event_list))
-print('event_lust', event_list)
 print(" --> running on %i events" % len(event_list), ' CleanChambers = ', CleanChambers)
 
 

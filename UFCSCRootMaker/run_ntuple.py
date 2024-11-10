@@ -14,7 +14,7 @@ options.parseArguments()
 doUnpacking = bool(True)
 
 ########## Options ############
-runUF_localReco    = bool(False)
+runUF_localReco    = bool(True)    # True if run CSCSegAlgoUF; False - default
 
 isDATA             = bool(False)
 isRAW              = bool(True)
@@ -162,7 +162,12 @@ else:
         'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_1.root',
         'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_2.root',
         'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_3.root',
-        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_4.root'
+        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_4.root',
+        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_5.root',
+        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_6.root',
+        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_7.root',
+        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_8.root',
+        'file:/eos/user/c/cherepan/CSC/Test2/AddingUFLR/AddUFLocalReco_9.root'
     )
     
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True)
