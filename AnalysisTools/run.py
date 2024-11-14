@@ -13,6 +13,7 @@ def show_help():
     print("  -p python_script   Specify a Python script to execute.")
     print("  -j job_name        Specify a job name.")
     print("  -c config          Specify a configuration.")
+    print("  -n maxEvts         maxNumberOfEvents.")
     print("  -h                 Show this help message.")
     sys.exit(0)
 

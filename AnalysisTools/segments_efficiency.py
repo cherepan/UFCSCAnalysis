@@ -92,7 +92,8 @@ class Analysis():
 
         Events_with_Clean_CSC_with_muon   = open("Events_with_Clean_CSC_with_muon.txt","w")
         Events_with_Noisy_CSC_with_muon   = open("Events_with_Noisy_CSC_with_muon.txt","w")
-        Events_with_more_that_one_segment = open("Events_with_more_that_one_segment","w")
+        Events_with_more_that_one_segment = open("Events_with_more_that_one_segment.txt","w")
+        Events_ToDebug                    = open("Events_ToDebug.txt","w")
 #        Events_with_Fake_CSC_with_muon  = open("Events_with_Fake_CSC_with_muon.txt","w")
         #Analysis Loop
         for i in range( tree.GetEntries() ):
@@ -117,10 +118,23 @@ class Analysis():
                     MuonsFromZ = tools.findMuonsFromZ(tree)
 #                    GRMuonsMap = tools.GenCSCRecoMuonsMap(tree)
 
-#                    for chamber in tools.LoopOverChambers(tree):
-#                        print('chamber:  ', chamber)
-#                        print(' N SimHits  in chamber  ', tools.all_simhits_in_a_chamber(tree, chamber[1]))
-#                        AllSimHitsInChamber = tools.all_simhits_in_a_chamber(tree,chamber[1])
+                    for chamber in tools.LoopOverChambers(tree):
+                        print('chamber:  ', chamber)
+                        All_SimHitsInChamber = tools.all_simhits_in_a_chamber(tree,chamber[1])
+                        All_SegmentsInChamber    = tools.allSegments_InChamber(tree, chamber[1])
+                        print(' N SimHits  in chamber  ', All_SimHitsInChamber )
+                        print(' N Segments  in chamber  ', All_SegmentsInChamber )
+                        print(' N Segments in Chamber:  ', len(All_SegmentsInChamber),
+                              ' E: ', int(tools.Chamber_endcap(chamber[1])), ' S:  ', int(tools.Chamber_station(chamber[1])),
+                              ' R: ',int(tools.Chamber_ring(chamber[1])), '  C:  ', int(tools.Chamber_chamber(chamber[1])), ' EVENT:  ', tree.Event)
+
+                        Events_ToDebug.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
+                                                                               tree.Event,
+                                                                               int(tools.Chamber_endcap(chamber[1])),
+                                                                               int(tools.Chamber_station(chamber[1])),
+                                                                               int(tools.Chamber_ring(chamber[1])),
+                                                                               int(tools.Chamber_chamber(chamber[1]))))
+
 #                        MuonsSimHits=[]
 #                        for k in range(0, tree.gen_muons_nMuons):
 #                            if (tree.gen_muons_mother_pdgId[k] == 23):
@@ -182,6 +196,9 @@ class Analysis():
 
 
                                 if(len(allSegmentsInChamber) > 2 ):
+                                    print(' N Segments in Chamber:  ', len(allSegmentsInChamber),
+                                          ' E: ', int(tools.Chamber_endcap(chambers_with_gen_muon)), ' S:  ', int(tools.Chamber_station(chambers_with_gen_muon)),
+                                          ' R: ',int(tools.Chamber_ring(chambers_with_gen_muon)), '  C:  ', int(tools.Chamber_chamber(chambers_with_gen_muon)), ' EVENT:  ', tree.Event)
                                     Events_with_more_that_one_segment.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
                                                                                                               tree.Event,
                                                                                                               int(tools.Chamber_endcap(chambers_with_gen_muon)),
