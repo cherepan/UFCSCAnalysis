@@ -26,19 +26,26 @@ process.GlobalTag.globaltag = "133X_mcRun3_2024_realistic_v7"
 
 #process.GlobalTag.globaltag = "106X_upgrade2018_realistic_v15_L1v1"
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1500) )
 #process.maxEvents = cms.untracked.PSet(  500 )
 isSIMDIGI = bool(False)
 isRAW = bool(True)
 ###################################################
 
 
-CleanChambers = False;
+CleanChambers = True;
 
 
 
 
-txt_file = open('Events_with_Clean_CSC_with_muon.txt', 'r')
+#txt_file = open('Events_with_Clean_CSC_with_muon.txt', 'r')
+
+
+#txt_file = open('EventsAndChambersWithTwoSegments.txt', 'r')
+
+#txt_file = open('EventsAndChambersWithFourSegments.txt', 'r')
+#txt_file = open('Events_with_more_that_one_segment.txt', 'r')
+txt_file = open('Events_ToDebug.txt', 'r')
 if(not CleanChambers):
     txt_file = open('Events_with_Noisy_CSC_with_muon.txt', 'r')
 
