@@ -138,11 +138,26 @@ process.goodOfflinePrimaryVertices = cms.EDFilter("VertexSelector",
                                                   filter = cms.bool(True)
                                                   )
 
+##########  debug block #####
+txt_file = open('Events_ToDebug.txt', 'r')
+if(not CleanChambers):
+    txt_file = open('Events_with_Noisy_CSC_with_muon.txt', 'r')
+
+print("Getting events to process from:", txt_file)
+event_list = [event.split('-')[0].strip() for event in txt_file.readlines()]
+event_list= list(dict.fromkeys(event_list))
+print(" --> running on %i events" % len(event_list), ' CleanChambers = ', CleanChambers)
+##########  debug block #####
+
+
+
+
 
 process.source = cms.Source ("PoolSource",
                              # Disable duplicate event check mode because the run and event -numbers
                              # are incorrect in current Madgraph samples (Dec 16, 2008)
                              # processingMode = cms.untracked.string('RunsAndLumis'),
+                             eventsToProcess     = cms.untracked.VEventRange(event_list),
                              duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
                              fileNames = cms.untracked.vstring(),      
                              )

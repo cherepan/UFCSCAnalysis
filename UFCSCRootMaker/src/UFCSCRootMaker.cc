@@ -783,7 +783,7 @@ void UFCSCRootMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
    Event = iEvent.id().event();
    LumiSect = iEvent.id().luminosityBlock();
    BunchCrossing = iEvent.bunchCrossing();
-   //   std::cout<<"--------------------------------------------------------------------------------------  Event   "<< Event << std::endl;
+   std::cout<<"--------------------------------------------------------------------------------------  Event   "<< Event << std::endl;
    //   cout<<" deb4 "<< std::endl;
    //Lumi Details
 /*   if (isDATA && isFullRECO && LumiDet.isValid()){
@@ -2399,7 +2399,7 @@ UFCSCRootMaker::doSegments(edm::Handle<CSCSegmentCollection> cscSegments, const 
   
    // CSC Segments
    counter = 0;
-   //  std::cout<<"  do Segments   size ()   "<< cscSegments->size() << std::endl;
+   std::cout<<" Number of segments :      "<< cscSegments->size() << std::endl;
    for(CSCSegmentCollection::const_iterator dSiter=cscSegments->begin(); dSiter != cscSegments->end(); dSiter++) {
 
      std::vector<double> recHitRecord_localX, recHitRecord_localY;
@@ -2423,6 +2423,8 @@ UFCSCRootMaker::doSegments(edm::Handle<CSCSegmentCollection> cscSegments, const 
      cscSegments_localX[counter]     = localPos.x();
      cscSegments_localY[counter]     = localPos.y();
 
+     std::cout<<" Chamber:     "<< "    E:"<< id.endcap()<<" S:"<<id.station()<<" R:"<<id.ring()<<" C:"<<id.chamber()<<std::endl;
+     std::cout<<"  segment X/Y  "<< localPos.x() << " / "<<localPos.y() <<std::endl;
      
      cscSegments_localXerr[counter]     = (*dSiter).localPositionError().xx() ;
      cscSegments_localYerr[counter]     = (*dSiter).localPositionError().yy() ;
