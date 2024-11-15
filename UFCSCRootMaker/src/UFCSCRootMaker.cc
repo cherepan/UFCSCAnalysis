@@ -2528,7 +2528,20 @@ UFCSCRootMaker::doSegments(edm::Handle<CSCSegmentCollection> cscSegments, const 
      cscSegments_recHitRecord_localX.push_back(recHitRecord_localX);
    }
    cscSegments_nSegments = counter;
-//cout << "nSeg: " << counter << endl;
+   cout << "nSeg: " << counter << endl;
+  
+  std::cout<<"]]]]]]]]]]] cscSegments_nSegments   "<< cscSegments_nSegments << "  EVENT   " << Event <<std::endl;
+  for(int i =0 ; i < cscSegments_nSegments; i++)
+    {
+     std::cout<<"]]]]]]]]]]] Chamber:     "<< "    E:"<< cscSegments_ID_endcap[i]<<" S:"<<cscSegments_ID_station[i]<<" R:"<<cscSegments_ID_ring[i]<<" C:"<<cscSegments_ID_chamber[i]<<std::endl;
+     std::cout<<"]]]]]]]]]]]  segment X/Y  "<<  cscSegments_localX[i] << " / "<< cscSegments_localY[i] <<std::endl;
+    }
+
+    
+
+
+
+   
 }
 
 
@@ -4080,7 +4093,7 @@ UFCSCRootMaker::bookTree(TTree *tree)
   tree->Branch("recHits2D_localX",  recHits2D_localX,   "recHits2D_localX[recHits2D_nRecHits2D]/D");
   tree->Branch("recHits2D_localY",  recHits2D_localY,   "recHits2D_localY[recHits2D_nRecHits2D]/D");
   tree->Branch("recHits2D_localXXerr",  recHits2D_localXXerr,   "recHits2D_localXXerr[recHits2D_nRecHits2D]/D");
-  tree->Branch("recHits2D_localYYerr",  recHits2D_localYYerr,   "recHits2D_localYYer[recHits2D_nRecHits2D]/D");
+  tree->Branch("recHits2D_localYYerr",  recHits2D_localYYerr,   "recHits2D_localYYerr[recHits2D_nRecHits2D]/D");
   tree->Branch("recHits2D_localXYerr",  recHits2D_localXYerr,   "recHits2D_localXYerr[recHits2D_nRecHits2D]/D");
   tree->Branch("recHits2D_stripPosition",  recHits2D_stripPosition,   "recHits2D_stripPosition[recHits2D_nRecHits2D]/D");
   tree->Branch("recHits2D_stripError",  recHits2D_stripError,   "recHits2D_stripError[recHits2D_nRecHits2D]/D");
@@ -4112,6 +4125,10 @@ UFCSCRootMaker::bookTree(TTree *tree)
   tree->Branch("recHits2D_wgroupsBX",  recHits2D_wgroupsBX,   "recHits2D_wgroupsBX[recHits2D_nRecHits2D]/I");
   tree->Branch("recHits2D_nWireGroups",  recHits2D_nWireGroups,   "recHits2D_nWireGroups[recHits2D_nRecHits2D]/I");
 
+
+
+
+  
   // CSCSegments
   tree->Branch("cscSegments_nSegments", &cscSegments_nSegments,"cscSegments_nSegments/I");
   tree->Branch("cscSegments_localX",  cscSegments_localX,  "cscSegments_localX[cscSegments_nSegments]/D");
@@ -4144,6 +4161,10 @@ UFCSCRootMaker::bookTree(TTree *tree)
   tree->Branch("cscSegments_Resolution_residual",  cscSegments_Resolution_residual ,"cscSegments_Resolution_residual[cscSegments_nSegments]/I");
   tree->Branch("cscSegments_Resolution_pull",  cscSegments_Resolution_pull ,"cscSegments_Resolution_pull[cscSegments_nSegments]/I");
 
+  // debug before writing into ntuple 
+
+
+  
   // Muons
   tree->Branch("muons_nMuons", &muons_nMuons, "muons_nMuons/I");
   tree->Branch("muons_isPFMuon",   muons_isPFMuon,   "muons_isPFMuon[muons_nMuons]/O");
