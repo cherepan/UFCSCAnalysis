@@ -2399,7 +2399,7 @@ UFCSCRootMaker::doSegments(edm::Handle<CSCSegmentCollection> cscSegments, const 
   
    // CSC Segments
    counter = 0;
-   std::cout<<" Number of segments :      "<< cscSegments->size() << std::endl;
+
    for(CSCSegmentCollection::const_iterator dSiter=cscSegments->begin(); dSiter != cscSegments->end(); dSiter++) {
 
      std::vector<double> recHitRecord_localX, recHitRecord_localY;
@@ -2423,9 +2423,6 @@ UFCSCRootMaker::doSegments(edm::Handle<CSCSegmentCollection> cscSegments, const 
      cscSegments_localX[counter]     = localPos.x();
      cscSegments_localY[counter]     = localPos.y();
 
-     std::cout<<" Chamber:     "<< "    E:"<< id.endcap()<<" S:"<<id.station()<<" R:"<<id.ring()<<" C:"<<id.chamber()<<std::endl;
-     std::cout<<"  segment X/Y  "<< localPos.x() << " / "<<localPos.y() <<std::endl;
-     
      cscSegments_localXerr[counter]     = (*dSiter).localPositionError().xx() ;
      cscSegments_localYerr[counter]     = (*dSiter).localPositionError().yy() ;
 
@@ -2528,19 +2525,7 @@ UFCSCRootMaker::doSegments(edm::Handle<CSCSegmentCollection> cscSegments, const 
      cscSegments_recHitRecord_localX.push_back(recHitRecord_localX);
    }
    cscSegments_nSegments = counter;
-   cout << "nSeg: " << counter << endl;
-  
-  std::cout<<"]]]]]]]]]]] cscSegments_nSegments   "<< cscSegments_nSegments << "  EVENT   " << Event <<std::endl;
-  for(int i =0 ; i < cscSegments_nSegments; i++)
-    {
-     std::cout<<"]]]]]]]]]]] Chamber:     "<< "    E:"<< cscSegments_ID_endcap[i]<<" S:"<<cscSegments_ID_station[i]<<" R:"<<cscSegments_ID_ring[i]<<" C:"<<cscSegments_ID_chamber[i]<<std::endl;
-     std::cout<<"]]]]]]]]]]]  segment X/Y  "<<  cscSegments_localX[i] << " / "<< cscSegments_localY[i] <<std::endl;
-    }
-
-    
-
-
-
+   //   cout << "nSeg: " << counter << endl;
    
 }
 

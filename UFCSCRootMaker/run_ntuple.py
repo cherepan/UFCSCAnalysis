@@ -140,13 +140,13 @@ process.goodOfflinePrimaryVertices = cms.EDFilter("VertexSelector",
 
 ##########  debug block #####
 txt_file = open('Events_ToDebug.txt', 'r')
-if(not CleanChambers):
-    txt_file = open('Events_with_Noisy_CSC_with_muon.txt', 'r')
+#if(not CleanChambers):
+#    txt_file = open('Events_with_Noisy_CSC_with_muon.txt', 'r')
 
 print("Getting events to process from:", txt_file)
 event_list = [event.split('-')[0].strip() for event in txt_file.readlines()]
 event_list= list(dict.fromkeys(event_list))
-print(" --> running on %i events" % len(event_list), ' CleanChambers = ', CleanChambers)
+print(" --> running on %i events" % len(event_list) )
 ##########  debug block #####
 
 
