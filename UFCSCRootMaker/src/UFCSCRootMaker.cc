@@ -714,7 +714,7 @@ void UFCSCRootMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
        iEvent.getByToken(cscRecHitTagSrcRULR,recHits_RU);
        iEvent.getByToken(cscRecHitTagSrcUFLR,recHits_UF);
 
-       //       CompareLRRechHits(recHits_RU, recHits_UF , saMuons, muons,cscGeom,iEvent);
+       CompareLRRechHits(recHits_RU, recHits_UF , saMuons, muons,cscGeom,iEvent);
      }
 
 
@@ -783,9 +783,13 @@ void UFCSCRootMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
    Event = iEvent.id().event();
    LumiSect = iEvent.id().luminosityBlock();
    BunchCrossing = iEvent.bunchCrossing();
-   std::cout<<"--------------------------------------------------------------------------------------  Event   "<< Event << std::endl;
-   //   cout<<" deb4 "<< std::endl;
+
    //Lumi Details
+
+
+
+
+   
 /*   if (isDATA && isFullRECO && LumiDet.isValid()){
      rawbxlumi = LumiDet->lumiValue(LumiDetails::kOCC1,iEvent.bunchCrossing());
      for (int i=0;i<3564;++i)
@@ -1366,13 +1370,7 @@ void UFCSCRootMaker::SimHitSimTkDebug(edm::Handle<reco::GenParticleCollection>& 
 					     simTk->at(hit.trackId()).trackerSurfaceMomentum().Pz(),
 					     simTk->at(hit.trackId()).trackerSurfaceMomentum().E());
 
-	      //	      std::cout<<"  SimTk P4  At Boundary : "; SimTkP4_AtBoundary.Print();
-	      //	      std::cout<<"  SimTk P4  At Surface : "; SimTkP4_Surface.Print();
-	      
-	      //	  std::cout<<" gen_index from simTk  "<< gen_index << "  simTk pT    " << SimTkP4_AtBoundary.Pt() <<std::endl;
-	      //  std::cout<<" hit Track ID  "<< hit.trackId() << "  simTk pT    " << SimTkP4_AtBoundary.Pt() <<std::endl;
-	      
-	      //	  const reco::GenParticle &gen_part = genParticles->at(gen_index);
+
 	      int selected_gen_index(-1);
 	      //	  if(gen_index!=-1)
 	      {
@@ -1446,8 +1444,6 @@ void UFCSCRootMaker::SimHitSimTkDebug(edm::Handle<reco::GenParticleCollection>& 
 	}
       if(abs(genParticles->at(genindex).pdgId()) == 13)
 	{
-	  //	  std::cout<<" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> genParticle matched to the simTr   "<< genindex 
-	  //		   <<  "  pdgId   " << genParticles->at(genindex).pdgId() <<"   simTrack gnindex:   " << simtr.genpartIndex() <<std::endl;
 	  TLorentzVector mathc(genParticles->at(genindex).p4().Px(),genParticles->at(genindex).p4().Py(),genParticles->at(genindex).p4().Pz(),genParticles->at(genindex).p4().E());
 	  mathc.Print();
 	}
@@ -1456,27 +1452,6 @@ void UFCSCRootMaker::SimHitSimTkDebug(edm::Handle<reco::GenParticleCollection>& 
 
 
 
-  //  edm::PSimHitContainer::const_iterator dSHsimIter;
-  //  for (dSHsimIter = simHits->begin(); dSHsimIter != simHits->end(); dSHsimIter++)
-  //    {
-
-  //      std::cout<<"  huy  " << std::endl;
-
-  //    }
-      /*
-      std::cout<<" trakdID    " << (*dSHsimIter).trackId() << std::endl;
-
-      unsigned int simTk_index(0);
-      for ( edm::SimTrackContainer::const_iterator itk=simTk->begin(); itk!=simTk->end(); ++itk, simTk_index++ )
-	{
-	  if(simTk_index == (*dSHsimIter).trackId())
-	    std::cout<<"   simTk  Index   genParticle index    " << simTk_index  <<"    "   <<  (*itk).genpartIndex()<< "  simHit particle type   " << (*dSHsimIter).particleType() <<std::endl;
-
-	}
-    }
-
-
-      */
   counter =0;
   unsigned int gen_counter(0);
 
@@ -1506,12 +1481,6 @@ void UFCSCRootMaker::SimHitSimTkDebug(edm::Handle<reco::GenParticleCollection>& 
 
 
   }
-
-
-
-
-
-
 
 
 
@@ -2113,7 +2082,7 @@ UFCSCRootMaker::doRecHits(edm::Handle<CSCRecHit2DCollection> recHits, edm::Handl
      for ( unsigned int i=0; i< dRHIter->nStrips(); i++) {
        for ( unsigned int j=0; j< dRHIter->nTimeBins()-1; j++) {
 	 recHits2D_SumQ[counter]+=dRHIter->adcs(i,j); 
-	 //cout << i << "  " << j << "  " <<  dRHIter->adcs(i,j) << endl;
+
 	 if (i!=1) recHits2D_SumQSides[counter]+=dRHIter->adcs(i,j);
        }
      }
@@ -2141,14 +2110,14 @@ UFCSCRootMaker::doRecHits(edm::Handle<CSCRecHit2DCollection> recHits, edm::Handl
 	 
      CSCLayerGeometry *thegeom = const_cast<CSCLayerGeometry*>(csclayer->geometry());
      
-     recHits2D_nearestStrip[counter] = thegeom->nearestStrip(rhitlocal);
-     recHits2D_nearestWire[counter]  = thegeom->nearestWire(rhitlocal);
-     recHits2D_nearestWireGroup[counter]            = thegeom->wireGroup(recHits2D_nearestWire[counter]);
-     recHits2D_localStripWireIntersectionX[counter] = thegeom->stripWireIntersection(thegeom->nearestStrip(rhitlocal),thegeom->nearestWire(rhitlocal)).x();
-     recHits2D_localStripWireIntersectionY[counter] = thegeom->stripWireIntersection(thegeom->nearestStrip(rhitlocal),thegeom->nearestWire(rhitlocal)).y();
+     recHits2D_nearestStrip[counter]                     = thegeom->nearestStrip(rhitlocal);
+     recHits2D_nearestWire[counter]                      = thegeom->nearestWire(rhitlocal);
+     recHits2D_nearestWireGroup[counter]                 = thegeom->wireGroup(recHits2D_nearestWire[counter]);
+     recHits2D_localStripWireIntersectionX[counter]      = thegeom->stripWireIntersection(thegeom->nearestStrip(rhitlocal),thegeom->nearestWire(rhitlocal)).x();
+     recHits2D_localStripWireIntersectionY[counter]      = thegeom->stripWireIntersection(thegeom->nearestStrip(rhitlocal),thegeom->nearestWire(rhitlocal)).y();
      recHits2D_localStripWireGroupIntersectionX[counter] = thegeom->stripWireGroupIntersection(thegeom->nearestStrip(rhitlocal),thegeom->wireGroup(recHits2D_nearestWire[counter])).x();
      recHits2D_localStripWireGroupIntersectionY[counter] = thegeom->stripWireGroupIntersection(thegeom->nearestStrip(rhitlocal),thegeom->wireGroup(recHits2D_nearestWire[counter])).y();
-     recHits2D_stripWidthAtHit[counter] = thegeom->stripPitch(rhitlocal);
+     recHits2D_stripWidthAtHit[counter]                  = thegeom->stripPitch(rhitlocal);
 
      recHits2D_positionWithinStrip[counter] = (*dRHIter).positionWithinStrip();
      recHits2D_nWireGroups[counter] =  (*dRHIter).nWireGroups();
@@ -2213,17 +2182,6 @@ UFCSCRootMaker::doRecHits(edm::Handle<CSCRecHit2DCollection> recHits, edm::Handl
 	 {
 
 
-	   //	     std::cout<<" trakdID    " << (*dSHsimIter).trackId() << std::endl;
-
-	   //	     unsigned int simTk_index(0);
-//	     for ( edm::SimTrackContainer::const_iterator itk=simTk->begin(); itk!=simTk->end(); ++itk, simTk_index++ )
-//	       {
-//		 if(simTk_index == (*dSHsimIter).trackId())
-//		   std::cout<<"   simTk  Index   genParticle index    "	<< simTk_index  <<"    "   <<  (*itk).genpartIndex()<< "  simHit particle type   " << (*dSHsimIter).particleType() <<std::endl/;
-
-//	       }
-
-
 	   // Get DetID for this simHit:
 	   CSCDetId sId = (CSCDetId)(*dSHsimIter).detUnitId();
 	   LocalPoint sHitlocal = (*dSHsimIter).localPosition();
@@ -2253,38 +2211,6 @@ UFCSCRootMaker::doRecHits(edm::Handle<CSCRecHit2DCollection> recHits, edm::Handl
 	   // find gen muon index that produced this hit
 	   
 	   int gen_muon_index(-1);
-	   //============================================ c'est commente le 05.03.2024
-	   /*	   if(abs((*dSHsimIter).particleType())  == 13 )
-
-	       if( (*dSHsimIter).trackId() < simTk->size() ) // hit sometimes return not realistic track index (> 10^5)
-		 {
-		   TLorentzVector SimTkP4_AtBoundary(simTk->at((*dSHsimIter).trackId()).getMomentumAtBoundary().Px(),
-						     simTk->at((*dSHsimIter).trackId()).getMomentumAtBoundary().Py(),
-						     simTk->at((*dSHsimIter).trackId()).getMomentumAtBoundary().Pz(),
-						     simTk->at((*dSHsimIter).trackId()).getMomentumAtBoundary().E());
-		   //		   std::cout<<"::::::::::::: simHit  hit Track ID  "<< (*dSHsimIter).trackId() << "  simTk pT    " << SimTkP4_AtBoundary.Pt() <<std::endl;
-
-		   double dPt(999.);
-		   if(SimTkP4_AtBoundary.Pt() !=0 )
-		     for (unsigned int igenparticle=0; igenparticle < genParticles->size(); igenparticle++)
-		       {
-			 const reco::GenParticle &g = genParticles->at(igenparticle);
-			 TLorentzVector gen_mu(g.p4().Px(),g.p4().Py(),g.4().Pz(),g.p4().E());
-			 
-			 //if(gen_mu.DeltaR(SimTkP4_AtBoundary) < dR)
-			 if(fabs(gen_mu.Pt() - SimTkP4_AtBoundary.Pt()) < dPt)
-			   {
-			     //dPt = gen_mu.DeltaR(SimTkP4_AtBoundary);
-			     dPt = fabs(gen_mu.Pt() - SimTkP4_AtBoundary.Pt());
-			     gen_muon_index = igenparticle;
-			   }
-		       }
-		 
-	   
-	   //	   std::cout<<"  recHit  gen_muon_index  "<< gen_muon_index << std::endl;
-	   //	   if(gen_muon_index!=-1)std::cout<<  " gen pT to be stored  " << sqrt(genParticles->at(gen_muon_index).p4().Px()*genParticles->at(gen_muon_index).p4().Px() + 
-	   //									       genParticles->at(gen_muon_index).p4().Py()*genParticles->at(gen_muon_index).p4().Py()) << std::endl;
-	   */
 
 	   unsigned int simHits_simTrackId;
 	   simHits_simTrackId = (*dSHsimIter).trackId(); // track id of the track that produced the simHit
@@ -2388,6 +2314,27 @@ UFCSCRootMaker::CompareLRRechHits(edm::Handle<CSCRecHit2DCollection> recHitsRU, 
 
   std::cout<<"  RecHits   RU:  "<< recHitsRU->size() << "  UF:    " << recHitsUF->size() <<std::endl;
 
+
+  std::cout<<"   print out  >>>>>>> DF   recHits X/Y   "<< std::endl;
+  for (CSCRecHit2DCollection::const_iterator dRHIter = recHitsRU->begin(); dRHIter != recHitsRU->end(); dRHIter++)
+    {
+      LocalPoint rhitlocal = (*dRHIter).localPosition();
+      std::cout<<" X/Y DFReco "<< rhitlocal.x() << "  /  "<< rhitlocal.y() << std::endl;
+      
+
+    }
+
+  std::cout<<"   print out  >>>>>>> UF   recHits X/Y   "<< std::endl;
+  for (CSCRecHit2DCollection::const_iterator dRHIter = recHitsUF->begin(); dRHIter != recHitsUF->end(); dRHIter++)
+    {
+      LocalPoint rhitlocal = (*dRHIter).localPosition();
+      std::cout<<" X/Y DFReco "<< rhitlocal.x() << "  /  "<< rhitlocal.y() << std::endl;
+      
+
+    }
+
+
+  
 }
 
 

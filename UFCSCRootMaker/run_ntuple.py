@@ -157,7 +157,7 @@ process.source = cms.Source ("PoolSource",
                              # Disable duplicate event check mode because the run and event -numbers
                              # are incorrect in current Madgraph samples (Dec 16, 2008)
                              # processingMode = cms.untracked.string('RunsAndLumis'),
-                             eventsToProcess     = cms.untracked.VEventRange(event_list),
+#                             eventsToProcess     = cms.untracked.VEventRange(event_list),
                              duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
                              fileNames = cms.untracked.vstring(),      
                              )
