@@ -116,18 +116,90 @@ class Analysis():
                 if opt.isMC:
 
                     MuonsFromZ = tools.findMuonsFromZ(tree)
-#                    GRMuonsMap = tools.GenCSCRecoMuonsMap(tree)
 
+
+
+#                    print(" Event :  ", tree.Event, "   nSegments  ", tree.cscSegments_nSegments)
+#                    for s in range(tree.cscSegments_nSegments):
+#                        segmentRing          = tree.cscSegments_ID_ring[s]
+#                        segmentStation       = tree.cscSegments_ID_station[s]
+#                        segmentEndcap        = tree.cscSegments_ID_endcap[s]
+#                        segmentChamber       = tree.cscSegments_ID_chamber[s]
+#                        print('  The chamber   ', '        E:',segmentEndcap,'S:',segmentStation,'R:',segmentRing,'C:',segmentChamber)
+#                        print('------- seg # :', s, ' X / Y: ', tree.cscSegments_localX[s], '  /  ', tree.cscSegments_localY[s] )
+#################    debug block 
+                    print('\n\n\n\n\n\n')
                     for chamber in tools.LoopOverChambers(tree):
                         print('chamber:  ', chamber)
-                        All_SimHitsInChamber = tools.all_simhits_in_a_chamber(tree,chamber[1])
+                        All_SimHitsInChamber     = tools.all_simhits_in_a_chamber(tree,chamber[1])
+                        All_RecHitsInChamber     = tools.all_rechits_in_a_chamber(tree, chamber[1])
                         All_SegmentsInChamber    = tools.allSegments_InChamber(tree, chamber[1])
-                        print(' N SimHits  in chamber  ', All_SimHitsInChamber )
-                        print(' N Segments  in chamber  ', All_SegmentsInChamber )
-                        print(' N Segments in Chamber:  ', len(All_SegmentsInChamber),
-                              ' E: ', int(tools.Chamber_endcap(chamber[1])), ' S:  ', int(tools.Chamber_station(chamber[1])),
-                              ' R: ',int(tools.Chamber_ring(chamber[1])), '  C:  ', int(tools.Chamber_chamber(chamber[1])), ' EVENT:  ', tree.Event)
+                        All_MuonRecHitsInChamber    = []
+                        All_NonMuonRecHitsInChamber = []
 
+                                                ## Sub debug block (remove me)
+                        print('------------- Rec Hits :   ', len(All_RecHitsInChamber))
+                        for iRH in All_RecHitsInChamber:
+                            print(' iRH  ', iRH, '  X/Y    ', tree.recHits2D_localX[iRH],' / ', tree.recHits2D_localY[iRH])
+                            print(' Its simHit   X/Y       ', tree.recHits2D_simHit_localX[iRH],' / ', tree.recHits2D_simHit_localY[iRH], '    iD   ', tree.recHits2D_simHit_particleTypeID[iRH])
+                            if(abs(tree.recHits2D_simHit_particleTypeID[iRH]) == 13):All_MuonRecHitsInChamber.append(iRH)
+                            if(abs(tree.recHits2D_simHit_particleTypeID[iRH]) != 13):All_NonMuonRecHitsInChamber.append(iRH)
+
+                        if(len(All_SegmentsInChamber) > 1):
+                            print(' All_MuonRecHitsInChamber   ', All_MuonRecHitsInChamber)
+                            print(' All_NonMuonRecHitsInChamber   ', All_NonMuonRecHitsInChamber)
+                            print('  overlapp ??  ', tools.lists_have_no_common_elements(All_MuonRecHitsInChamber,All_NonMuonRecHitsInChamber))
+                            print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+                            WireHist  = tools.fill_wire_matrix(tree,All_RecHitsInChamber,chamber[1])
+                            StripHist = tools.fill_strip_matrix(tree,All_RecHitsInChamber,chamber[1])
+                            print('Event:  ', int(tree.Event), '  chamber  ', chamber[1])
+                            print('Whire: ')
+                            tools.write_th2f(WireHist, 'X')
+                            print('Strips: ')
+                            tools.write_th2f(StripHist,'X')
+
+
+
+                            print('>>>>>>>>>>>>>>>>>>>>  Muons Sim Hits >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ')
+                            WireMuHist  = tools.fill_wire_matrix(tree, All_MuonRecHitsInChamber ,chamber[1])
+                            StripMuHist = tools.fill_strip_matrix(tree,All_MuonRecHitsInChamber ,chamber[1])
+
+                            print('Whire: ')
+                            tools.write_th2f(WireMuHist, 'm')
+                            print('Strips: ')
+                            tools.write_th2f(StripMuHist,'m')
+
+
+                            print('>>>>>>>>>>>>>>>>>>>>  Muons Non Sim Hits >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ')
+                            WireNonMuHist  = tools.fill_wire_matrix(tree, All_NonMuonRecHitsInChamber ,chamber[1])
+                            StripNonMuHist = tools.fill_strip_matrix(tree,All_NonMuonRecHitsInChamber ,chamber[1])
+                            print('Whire: ')
+                            tools.write_th2f(WireNonMuHist, 'e')
+                            print('Strips: ')
+                            tools.write_th2f(StripNonMuHist,'e')
+
+                        
+
+
+                            
+                        print('------------- Sim Hits :   ', len(All_SimHitsInChamber), '     difference nRecHits  ', len(All_RecHitsInChamber) - len(All_SimHitsInChamber))
+                        for iSH in All_SimHitsInChamber:
+                            print(' iSH  ', iSH, '  X/Y   ', tree.simHits_localX[iSH],' / ', tree.simHits_localY[iSH])
+
+
+                        ## Sub debug block (remove me)
+                        
+                        print(' N Segments in Chamber:  ', len(All_SegmentsInChamber),
+                              '          E:', int(tools.Chamber_endcap(chamber[1])), ' S:', int(tools.Chamber_station(chamber[1])),
+                              ' R:',int(tools.Chamber_ring(chamber[1])), '  C:', int(tools.Chamber_chamber(chamber[1])), '      EVENT:  ', tree.Event)
+
+
+                        for seg in All_SegmentsInChamber:
+                            print('------- seg # :', seg, ' X / Y: ', tree.cscSegments_localX[seg], '  /  ', tree.cscSegments_localY[seg] )
+
+
+
+    
                         Events_ToDebug.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
                                                                                tree.Event,
                                                                                int(tools.Chamber_endcap(chamber[1])),
@@ -135,21 +207,7 @@ class Analysis():
                                                                                int(tools.Chamber_ring(chamber[1])),
                                                                                int(tools.Chamber_chamber(chamber[1]))))
 
-#                        MuonsSimHits=[]
-#                        for k in range(0, tree.gen_muons_nMuons):
-#                            if (tree.gen_muons_mother_pdgId[k] == 23):
-#                                MuonSimHits = tools.all_muon_simhits_in_a_chamber(tree, chamber[1],  k)
-#                                print(' muons simhits in a chamber:  ', tools.all_muon_simhits_in_a_chamber(tree, chamber[1],  k))
-#                        if not tools.lists_have_no_common_elements(MuonsSimHits,AllSimHitsInChamber):
-#                            print(' =====================>>>>>>>>>>>     AllSimHits ',AllSimHitsInChamber)
-#                            print(' =========================>>>>>>>     AllMuonSimHits ',MuonsSimHits)
 
-                            
-#all_muon_simhits_in_a_chamber
-#all_simhits_in_a_chamber
-#def all_muon_simhits_in_a_chamber(tree, chamber, gen_muon_index)
-# LoopOverChambers(tree)
-#lists_have_no_common_elements
  
 
                     for mu in MuonsFromZ:                        
@@ -196,6 +254,7 @@ class Analysis():
 
 
                                 if(len(allSegmentsInChamber) > 2 ):
+                                    
                                     print(' N Segments in Chamber:  ', len(allSegmentsInChamber),
                                           ' E: ', int(tools.Chamber_endcap(chambers_with_gen_muon)), ' S:  ', int(tools.Chamber_station(chambers_with_gen_muon)),
                                           ' R: ',int(tools.Chamber_ring(chambers_with_gen_muon)), '  C:  ', int(tools.Chamber_chamber(chambers_with_gen_muon)), ' EVENT:  ', tree.Event)
@@ -205,6 +264,7 @@ class Analysis():
                                                                                                               int(tools.Chamber_station(chambers_with_gen_muon)),
                                                                                                               int(tools.Chamber_ring(chambers_with_gen_muon)),
                                                                                                               int(tools.Chamber_chamber(chambers_with_gen_muon))))
+
 
 
                                 if(HitsSelectionPrefix=='Clean_'):

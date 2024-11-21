@@ -85,13 +85,13 @@ def is_y_in_not_dead_zone(y, chamber):
     return False
 
 
-def write_th2f(hist):
+def write_th2f(hist, label_type):
     for i in range(1, hist.GetNbinsY() + 1):
         for j in range(1, hist.GetNbinsX() + 1):
             if hist.GetBinContent(j, i) == 0:
                 sys.stdout.write("-")
             else:
-                sys.stdout.write("O")
+                sys.stdout.write(label_type)
         print()
 
 
@@ -176,6 +176,9 @@ def fill_strip_matrix(tree, rechits, chamber):
             StripHits.FillN(len(rows_v), cols_a, rows_a, data_a)
             return StripHits
 
+
+
+        
 
 def findMuonsFromZ(tree):  # find gen Muon from Z unt the   forward region and pt > 15
         Index = []
@@ -269,15 +272,20 @@ def LoopOverChambers(tree):
         return chamberList   #  returns a list [NSimHits, Chamber N ]
 
 
+
+    
 def ChamberID(endcap, station, ring, chamber):
         return endcap*10000 + 1000*station + 100*ring + chamber
 
 
+    
+    
 def Chamber_station(ChamberID):
         endcap  = round(ChamberID/10000)
         station = round( (ChamberID - endcap*10000)/1000)
         return station
 
+    
 
 def Chamber_ring(ChamberID):
         endcap  = round(ChamberID/10000)
@@ -285,6 +293,7 @@ def Chamber_ring(ChamberID):
         ring    = round( (ChamberID - endcap*10000 - station*1000)/100)
         return ring
 
+    
 def Chamber_chamber(ChamberID):
         endcap     = round(ChamberID/10000)
         station    = round( (ChamberID - endcap*10000)/1000)
@@ -292,6 +301,7 @@ def Chamber_chamber(ChamberID):
         chamber    = round( (ChamberID - endcap*10000 - station*1000 - ring*100))
         return chamber
 
+    
 
 def Chamber_endcap(ChamberID):
         endcap  = round(ChamberID/10000)
@@ -314,6 +324,7 @@ def Chambers_crossedByGenMuon(tree, gen_muon_index):
         return out
 
 
+    
 
 def Chambers_crossedByMuon(tree, muon_index):
         out = []
