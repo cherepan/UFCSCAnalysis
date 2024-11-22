@@ -7,4 +7,7 @@ python3 -i segments_efficiency.py -m 1 -f CSC_UF_Ntuple_SegmentAlgoUF.root      
 
 
 
+python3 -i segments_efficiency.py -m 1 -f ../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoUF.root  -j Test_UFReco   -n 100   2>&1 | tee Log_UF
+
+
  
