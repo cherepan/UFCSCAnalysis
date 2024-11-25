@@ -145,7 +145,7 @@ class Analysis():
                             if(abs(tree.recHits2D_simHit_particleTypeID[iRH]) == 13):All_MuonRecHitsInChamber.append(iRH)
                             if(abs(tree.recHits2D_simHit_particleTypeID[iRH]) != 13):All_NonMuonRecHitsInChamber.append(iRH)
 
-                        if(len(All_SegmentsInChamber) > 1):
+                        if(len(All_SegmentsInChamber) > 0):
                             print(' All_MuonRecHitsInChamber   ', All_MuonRecHitsInChamber)
                             print(' All_NonMuonRecHitsInChamber   ', All_NonMuonRecHitsInChamber)
                             print('  overlapp ??  ', tools.lists_have_no_common_elements(All_MuonRecHitsInChamber,All_NonMuonRecHitsInChamber))
