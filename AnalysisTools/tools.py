@@ -811,7 +811,7 @@ def SegmentWithinResolution(tree, segment,  simX, simY, chamber):
     
 
 
-def FoundMatchedSegment(tree, simsegment, chamber, ExcludeHVSpacer = True):
+def FoundMatchedSegment(tree, simsegment, chamber, ExcludeHVSpacer = True): #  this is to be revised
         
         AllSegments = allSegments_InChamber(tree, chamber)
         FoundMatchedSegment = False
