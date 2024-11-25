@@ -714,7 +714,7 @@ void UFCSCRootMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
        iEvent.getByToken(cscRecHitTagSrcRULR,recHits_RU);
        iEvent.getByToken(cscRecHitTagSrcUFLR,recHits_UF);
 
-       CompareLRRechHits(recHits_RU, recHits_UF , saMuons, muons,cscGeom,iEvent);
+       //       CompareLRRechHits(recHits_RU, recHits_UF , saMuons, muons,cscGeom,iEvent);
      }
 
 

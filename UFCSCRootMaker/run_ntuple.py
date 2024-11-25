@@ -14,7 +14,7 @@ options.parseArguments()
 doUnpacking = bool(True)
 
 ########## Options ############
-runUF_localReco    = bool(True)    # True if run CSCSegAlgoUF; False - default
+runUF_localReco    = bool(False)    # True if run CSCSegAlgoUF; False - default
 
 isDATA             = bool(False)
 isRAW              = bool(True)
