@@ -84,20 +84,10 @@ class Analysis():
         if not tree:
             raise RunTimeError("Tree not found!")
 
-        SegmentFarFromSimHits = open("SegmentFarFromSimHits.txt","w")
-        EventsAndChambersWithZeroRuSegments = open("EventsAndChambersWithZeroRuSegmentsLotsOfRecHits.txt","w")
-        EventsAndChambersWithTwoSegments = open("EventsAndChambersWithTwoSegments.txt","w")
-        EventsAndChambersWithFourSegments = open("EventsAndChambersWithFourSegments.txt","w")
 
 
-        Events_with_Clean_CSC_with_muon   = open("Events_with_Clean_CSC_with_muon.txt","w")
-        Events_with_Noisy_CSC_with_muon   = open("Events_with_Noisy_CSC_with_muon.txt","w")
-        Events_with_more_that_one_segment = open("Events_with_more_that_one_segment.txt","w")
-        Events_ToDebug                    = open("Events_ToDebug.txt","w")
-#        Events_with_Fake_CSC_with_muon  = open("Events_with_Fake_CSC_with_muon.txt","w")
-        #Analysis Loop
+        
         for i in range( tree.GetEntries() ):
-#            print('===============================    Event loop    ========================================= ')
             tree.GetEntry(i)
 
             if i%100 == 0:
@@ -114,102 +104,7 @@ class Analysis():
                 MuonSegmentsRechitsList = []
 
                 if opt.isMC:
-
                     MuonsFromZ = tools.findMuonsFromZ(tree)
-
-
-
-#                    print(" Event :  ", tree.Event, "   nSegments  ", tree.cscSegments_nSegments)
-#                    for s in range(tree.cscSegments_nSegments):
-#                        segmentRing          = tree.cscSegments_ID_ring[s]
-#                        segmentStation       = tree.cscSegments_ID_station[s]
-#                        segmentEndcap        = tree.cscSegments_ID_endcap[s]
-#                        segmentChamber       = tree.cscSegments_ID_chamber[s]
-#                        print('  The chamber   ', '        E:',segmentEndcap,'S:',segmentStation,'R:',segmentRing,'C:',segmentChamber)
-#                        print('------- seg # :', s, ' X / Y: ', tree.cscSegments_localX[s], '  /  ', tree.cscSegments_localY[s] )
-#################    debug block 
-                    print('\n\n\n\n\n\n')
-                    for chamber in tools.LoopOverChambers(tree):
-                        print('chamber:  ', chamber)
-                        All_SimHitsInChamber     = tools.all_simhits_in_a_chamber(tree,chamber[1])
-                        All_RecHitsInChamber     = tools.all_rechits_in_a_chamber(tree, chamber[1])
-                        All_SegmentsInChamber    = tools.allSegments_InChamber(tree, chamber[1])
-                        All_MuonRecHitsInChamber    = []
-                        All_NonMuonRecHitsInChamber = []
-
-                                                ## Sub debug block (remove me)
-                        print('------------- Rec Hits :   ', len(All_RecHitsInChamber))
-                        for iRH in All_RecHitsInChamber:
-                            print(' iRH  ', iRH, '  X/Y    ', tree.recHits2D_localX[iRH],' / ', tree.recHits2D_localY[iRH])
-                            print(' Its simHit   X/Y       ', tree.recHits2D_simHit_localX[iRH],' / ', tree.recHits2D_simHit_localY[iRH], '    iD   ', tree.recHits2D_simHit_particleTypeID[iRH])
-                            if(abs(tree.recHits2D_simHit_particleTypeID[iRH]) == 13):All_MuonRecHitsInChamber.append(iRH)
-                            if(abs(tree.recHits2D_simHit_particleTypeID[iRH]) != 13):All_NonMuonRecHitsInChamber.append(iRH)
-
-                        if(len(All_SegmentsInChamber) > 0):
-                            print(' All_MuonRecHitsInChamber   ', All_MuonRecHitsInChamber)
-                            print(' All_NonMuonRecHitsInChamber   ', All_NonMuonRecHitsInChamber)
-                            print('  overlapp ??  ', tools.lists_have_no_common_elements(All_MuonRecHitsInChamber,All_NonMuonRecHitsInChamber))
-                            print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-                            WireHist  = tools.fill_wire_matrix(tree,All_RecHitsInChamber,chamber[1])
-                            StripHist = tools.fill_strip_matrix(tree,All_RecHitsInChamber,chamber[1])
-                            print('Event:  ', int(tree.Event), '  chamber  ', chamber[1])
-                            print('Whire: ')
-                            tools.write_th2f(WireHist, 'X')
-                            print('Strips: ')
-                            tools.write_th2f(StripHist,'X')
-
-
-
-                            print('>>>>>>>>>>>>>>>>>>>>  Muons Sim Hits >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ')
-                            WireMuHist  = tools.fill_wire_matrix(tree, All_MuonRecHitsInChamber ,chamber[1])
-                            StripMuHist = tools.fill_strip_matrix(tree,All_MuonRecHitsInChamber ,chamber[1])
-
-                            print('Whire: ')
-                            tools.write_th2f(WireMuHist, 'm')
-                            print('Strips: ')
-                            tools.write_th2f(StripMuHist,'m')
-
-
-                            print('>>>>>>>>>>>>>>>>>>>>  Muons Non Sim Hits >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ')
-                            WireNonMuHist  = tools.fill_wire_matrix(tree, All_NonMuonRecHitsInChamber ,chamber[1])
-                            StripNonMuHist = tools.fill_strip_matrix(tree,All_NonMuonRecHitsInChamber ,chamber[1])
-                            print('Whire: ')
-                            tools.write_th2f(WireNonMuHist, 'e')
-                            print('Strips: ')
-                            tools.write_th2f(StripNonMuHist,'e')
-
-                        
-
-
-                            
-                        print('------------- Sim Hits :   ', len(All_SimHitsInChamber), '     difference nRecHits  ', len(All_RecHitsInChamber) - len(All_SimHitsInChamber))
-                        for iSH in All_SimHitsInChamber:
-                            print(' iSH  ', iSH, '  X/Y   ', tree.simHits_localX[iSH],' / ', tree.simHits_localY[iSH])
-
-
-                        ## Sub debug block (remove me)
-                        
-                        print(' N Segments in Chamber:  ', len(All_SegmentsInChamber),
-                              '          E:', int(tools.Chamber_endcap(chamber[1])), ' S:', int(tools.Chamber_station(chamber[1])),
-                              ' R:',int(tools.Chamber_ring(chamber[1])), '  C:', int(tools.Chamber_chamber(chamber[1])), '      EVENT:  ', tree.Event)
-
-
-                        for seg in All_SegmentsInChamber:
-                            print('------- seg # :', seg, ' X / Y: ', tree.cscSegments_localX[seg], '  /  ', tree.cscSegments_localY[seg] )
-
-
-
-    
-                        Events_ToDebug.write('{}:{} - {} {} {} {}  \n '.format(tree.Run,
-                                                                               tree.Event,
-                                                                               int(tools.Chamber_endcap(chamber[1])),
-                                                                               int(tools.Chamber_station(chamber[1])),
-                                                                               int(tools.Chamber_ring(chamber[1])),
-                                                                               int(tools.Chamber_chamber(chamber[1]))))
-
-
- 
-
                     for mu in MuonsFromZ:                        
                     
                             genMuIndex  = mu
