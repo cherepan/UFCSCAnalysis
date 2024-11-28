@@ -606,6 +606,7 @@ def SimSegment_localPosition(tree, SimHits):
 
     simhit_in_layer5 = -1
     simhit_in_layer6 = -1
+    
     for simhit in SimHits:
         if tree.simHits_ID_layer[simhit] == 1:
             simhit_in_layer1=simhit
@@ -636,6 +637,11 @@ def SimSegment_localPosition(tree, SimHits):
         localY = tree.simHits_localY[simhit_in_layer4]
 
     return TVector3(localX, localY, 0)
+
+
+
+
+
 
 def Segment_closest_to_simhit(tree, SimHits, Segments):
         SegmentSimHitPair = []

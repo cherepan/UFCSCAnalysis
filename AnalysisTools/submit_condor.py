@@ -37,8 +37,12 @@ def main():
     job_params = [
 
         ##  config 0 - clean; 1 - noise was used in the past
-        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoUF.root",      "python_script": "segments_efficiency.py", "job_name": "UFSegmentsEfficiency", "config": "0"},
-        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "segments_efficiency.py", "job_name": "DFSegmentsEfficiency", "config": "0"},
+#        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoUF.root",      "python_script": "segments_efficiency.py", "job_name": "UFSegmentsEfficiency", "config": "0"},
+#        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "segments_efficiency.py", "job_name": "DFSegmentsEfficiency", "config": "0"},
+
+
+        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoUF.root",      "python_script": "performance_summary.py", "job_name": "UFPerformnace", "config": "0"},
+        {"root_file": "../UFCSCRootMaker/CSC_UF_Ntuple_SegmentAlgoDefault.root", "python_script": "performance_summary.py", "job_name": "DFPerformance", "config": "0"},
         
         
         # Add more job parameters as needed
