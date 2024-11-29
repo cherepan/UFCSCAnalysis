@@ -129,7 +129,6 @@ class Analysis():
                             self.hists1D["nChambers_crossedByGenMuon"].Fill(len(ChambersCrossedByGenMuon) )
                             
                             Chamber_list = ChambersCrossedByGenMuon
-
                             
                             for chambers_with_gen_muon in Chamber_list:
                                 
@@ -154,17 +153,17 @@ class Analysis():
 
                                 
                                 HitsSelectionPrefix     = ''
-                                # clean selection implies chambers with only 6 rec hits and they all belong to a muon
-                                if((len(allSimHitsInChamber) == len(allMuonSimHitsInChamber) and len(allMuonSimHitsInChamber) == 6)) : HitsSelectionPrefix = 'Clean_'
                                 # noise selection basiacally releases simhits
                                 if((len(allSimHitsInChamber) >= 3 and len(allMuonSimHitsInChamber) >= 3))                            : HitsSelectionPrefix = 'Noise_'
+                                # clean selection implies chambers with only 6 rec hits and they all belong to a muon
+                                if((len(allSimHitsInChamber) == len(allMuonSimHitsInChamber) and len(allMuonSimHitsInChamber) == 6)) : HitsSelectionPrefix = 'Clean_'
 
 
                                 
                                 if(len(allMuonSimHitsInChamber) < 3 ):continue   # Skip if 2 mu simHits in here, who cares
                                 if(len(allRecHitsInChamber)     < 3 ):continue   # Skip if less than 3 rechits
 
-
+#                                print('All Sim HIts : ', len(allSimHitsInChamber), '  All muons sim hits:  ', len(allMuonSimHitsInChamber), '  selection to b e used:  ', HitsSelectionPrefix)
                                 
 
 
@@ -197,7 +196,7 @@ class Analysis():
 
                                     
                                     self.hists1D[ChamberTypePrefix    + HitsSelectionPrefix + "SelectedSegments_Norm"].Fill(  len(allSegmentsInChamber)  )
-
+#                                    print(' Segments Per Chamber  : ', len(allSegmentsInChamber) ,  '  selection to b e used:  ', HitsSelectionPrefix)
 #                                   if(len(allSegmentsInChamber) == 1):
                                     self.eff_denum_hists1D[ChamberTypePrefix + HitsSelectionPrefix + 'SegmentEfficiency_MuonPt_den'].Fill(GMuLV.Pt())
                                     self.eff_denum_hists1D[ChamberTypePrefix + HitsSelectionPrefix + 'SegmentEfficiency_MuonEta_den'].Fill(math.fabs(GMuLV.Eta()))
@@ -214,7 +213,7 @@ class Analysis():
                                     for isegment in allSegmentsInChamber:
                                         AllRecHitsOfSegment = tools.allRechits_of_segment(tree, isegment)
                                         self.hists1D[ChamberTypePrefix + HitsSelectionPrefix + 'nRecHitsPerSegment_Norm'].Fill(len(AllRecHitsOfSegment))
-
+#                                        print(' nRecHitsPer Segment    ', len(AllRecHitsOfSegment), '  selection:  ', HitsSelectionPrefix)
 
 
 
@@ -227,10 +226,10 @@ class Analysis():
                                     if(ClosestSegment!=-1):toFill=1
                                     self.hists1D[ChamberTypePrefix +  HitsSelectionPrefix + 'ClosestSegment'].Fill(toFill)
                                     
-                                    if(ClosestSegment == -1):
-                                        print('  SimSegment Local X / Y ', MuonSimSegment_localX, ' / ',MuonSimSegment_localY, '  and N segments  ', len(allSegmentsInChamber))
-                                        for segment in allSegmentsInChamber:
-                                            print(' X/ Y',  tree.cscSegments_localX[segment], '/ ',tree.cscSegments_localY[segment])
+#                                    if(ClosestSegment == -1):
+#                                        print('  SimSegment Local X / Y ', MuonSimSegment_localX, ' / ',MuonSimSegment_localY, '  and N segments  ', len(allSegmentsInChamber))
+#                                        for segment in allSegmentsInChamber:
+#                                            print(' X/ Y',  tree.cscSegments_localX[segment], '/ ',tree.cscSegments_localY[segment])
                                             
                                     if( len(allSegmentsInChamber) ==0 ):
                                         print(' when there is no segment:   N Rec Hits: ',len(allRecHitsInChamber), ' mu sim hits  ' ,
