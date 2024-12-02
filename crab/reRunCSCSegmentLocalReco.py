@@ -38,14 +38,16 @@ CleanChambers = True;
 
 
 
-#txt_file = open('Events_with_Clean_CSC_with_muon.txt', 'r')
+txt_file = open('Events_with_Clean_CSC_with_muon.txt', 'r')
 
 
 #txt_file = open('EventsAndChambersWithTwoSegments.txt', 'r')
 
 #txt_file = open('EventsAndChambersWithFourSegments.txt', 'r')
 #txt_file = open('Events_with_more_that_one_segment.txt', 'r')
-txt_file = open('Events_ToDebug.txt', 'r')
+#txt_file = open('Events_ToDebug.txt', 'r')
+
+
 if(not CleanChambers):
     txt_file = open('Events_with_Noisy_CSC_with_muon.txt', 'r')
 
