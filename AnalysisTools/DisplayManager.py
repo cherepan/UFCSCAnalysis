@@ -171,7 +171,8 @@ class DisplayManager(object):
         self.canvas.Update()
         self.canvas.SetLogy(False)
         self.canvas.Print(self.name)
-        self.canvas.SaveAs('output/'+h.GetName()+'.pdf')    
+        self.canvas.SaveAs('output/'+h.GetName()+'.pdf')
+        self.canvas.SaveAs('output/'+h.GetName()+'.png')    
 
 
 

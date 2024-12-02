@@ -222,9 +222,9 @@ class Analysis():
 
                                         
                                     ClosestSegment = tools.Segment_closest_to_simhit(tree, allMuonSimHitsInChamber, allSegmentsInChamber)
-                                    toFill = ClosestSegment
-                                    if(ClosestSegment!=-1):toFill=1
-                                    self.hists1D[ChamberTypePrefix +  HitsSelectionPrefix + 'ClosestSegment'].Fill(toFill)
+#                                    toFill = ClosestSegment
+#                                    if(ClosestSegment!=-1):toFill=1
+#                                    self.hists1D[ChamberTypePrefix +  HitsSelectionPrefix + 'ClosestSegment'].Fill(toFill)
                                     
 #                                    if(ClosestSegment == -1):
 #                                        print('  SimSegment Local X / Y ', MuonSimSegment_localX, ' / ',MuonSimSegment_localY, '  and N segments  ', len(allSegmentsInChamber))
@@ -321,7 +321,7 @@ class Analysis():
                     
                 ## General 
                 self.hists1D[string+ "SelectedSegments_Norm"]                  = ROOT.TH1F(string+'SelectedSegments_Norm', "; N Segments ", 15, -0.5, 14.5)
-                self.hists1D[string+ "ClosestSegment"]                         = ROOT.TH1F(string+'ClosestSegment', "; N Segments ", 3, -1.5, 1.5)
+#                self.hists1D[string+ "ClosestSegment"]                         = ROOT.TH1F(string+'ClosestSegment', "; N Segments ", 3, -1.5, 1.5)
 
 
                 ## Efficiency
