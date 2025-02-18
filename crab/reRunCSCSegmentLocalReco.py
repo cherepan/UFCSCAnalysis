@@ -37,14 +37,10 @@ CleanChambers = True;
 
 
 
-
-txt_file = open('Events_with_Clean_CSC_with_muon.txt', 'r')
-
-
+#txt_file = open('Events_with_Clean_CSC_with_muon.txt', 'r')
 #txt_file = open('EventsAndChambersWithTwoSegments.txt', 'r')
-
 #txt_file = open('EventsAndChambersWithFourSegments.txt', 'r')
-#txt_file = open('Events_with_more_that_one_segment.txt', 'r')
+txt_file = open('Events_with_more_that_one_segment.txt', 'r')
 #txt_file = open('Events_ToDebug.txt', 'r')
 
 
@@ -64,7 +60,7 @@ process.options   = cms.untracked.PSet( SkipEvent = cms.untracked.vstring("Produ
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 process.source    = cms.Source("PoolSource",
                                noEventSort         = cms.untracked.bool(True),
-                               eventsToProcess     = cms.untracked.VEventRange(event_list),
+                               #eventsToProcess     = cms.untracked.VEventRange(event_list),
                                duplicateCheckMode  = cms.untracked.string('noDuplicateCheck'),
                                fileNames = cms.untracked.vstring(
 #                                    'file:/eos/user/c/cherepan/CSC/InputFilesZMMRelVal_13_3_0/a95425f8-0854-4252-bc17-42ccb35ab3fd.root'
