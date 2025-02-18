@@ -153,7 +153,7 @@ class Analysis():
                             WireHist  = tools.fill_wire_matrix(tree,All_RecHitsInChamber,chamber[1])
                             StripHist = tools.fill_strip_matrix(tree,All_RecHitsInChamber,chamber[1])
                             print('Event:  ', int(tree.Event), '  chamber  ', chamber[1])
-                            print('Whire: ')
+                            print('Wire Hits: ')
                             tools.write_th2f(WireHist, 'X')
                             print('Strips: ')
                             tools.write_th2f(StripHist,'X')
@@ -164,18 +164,18 @@ class Analysis():
                             WireMuHist  = tools.fill_wire_matrix(tree, All_MuonRecHitsInChamber ,chamber[1])
                             StripMuHist = tools.fill_strip_matrix(tree,All_MuonRecHitsInChamber ,chamber[1])
 
-                            print('Whire: ')
+                            print('Wire Hits: ')
                             tools.write_th2f(WireMuHist, 'm')
-                            print('Strips: ')
+                            print('Strips Hits: ')
                             tools.write_th2f(StripMuHist,'m')
 
 
                             print('>>>>>>>>>>>>>>>>>>>>  Muons Non Sim Hits >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ')
                             WireNonMuHist  = tools.fill_wire_matrix(tree, All_NonMuonRecHitsInChamber ,chamber[1])
                             StripNonMuHist = tools.fill_strip_matrix(tree,All_NonMuonRecHitsInChamber ,chamber[1])
-                            print('Whire: ')
+                            print('Wire Hits: ')
                             tools.write_th2f(WireNonMuHist, 'e')
-                            print('Strips: ')
+                            print('Strips Hits: ')
                             tools.write_th2f(StripNonMuHist,'e')
 
                         
